@@ -309,6 +309,7 @@ public class MappedFileQueue implements Swappable {
         }
 
         if (createOffset != -1 && needCreate) {
+            log.warn("[hxy debug] Need to create new mapped file of {}.", createOffset);
             return tryCreateMappedFile(createOffset);
         }
 
@@ -345,6 +346,7 @@ public class MappedFileQueue implements Swappable {
         String nextFilePath = this.storePath + File.separator + UtilAll.offset2FileName(createOffset);
         String nextNextFilePath = this.storePath + File.separator + UtilAll.offset2FileName(createOffset
                 + this.mappedFileSize);
+        log.info("[hxy debug] doCreateMappedFile({}, {}).", nextFilePath, nextNextFilePath);
         return doCreateMappedFile(nextFilePath, nextNextFilePath);
     }
 
@@ -352,6 +354,7 @@ public class MappedFileQueue implements Swappable {
         MappedFile mappedFile = null;
 
         if (this.allocateMappedFileService != null) {
+            log.info("[hxy debug] use allocateMappedFileService to create new mapped file.");
             mappedFile = this.allocateMappedFileService.putRequestAndReturnMappedFile(nextFilePath,
                     nextNextFilePath, this.mappedFileSize);
         } else {

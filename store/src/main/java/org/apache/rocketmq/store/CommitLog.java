@@ -1175,6 +1175,9 @@ public class CommitLog implements Swappable {
                     if (isCloseReadAhead()) {
                         setFileReadMode(mappedFile, LibC.MADV_RANDOM);
                     }
+                    if (null == mappedFile) {
+                        log.warn("[hxy debug] Create mapped file error, topic: {} clientAddr: {}.", messageExtBatch.getTopic(), messageExtBatch.getBornHostString());
+                    }
                 }
                 if (null == mappedFile) {
                     log.error("Create mapped file1 error, topic: {} clientAddr: {}", messageExtBatch.getTopic(), messageExtBatch.getBornHostString());
